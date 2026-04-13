@@ -10,7 +10,7 @@ SELECT SPALTEN FROM TABELLE WHERE  SPALTEN = >
 <= kleiner gleich als
 >= größer gleich als
 <>  !=  soll es nicht sein
-in  gib mir eine Liste von Werten
+in  gib mir eine Liste von Werten spalte = wert or Spalte = wert
 between alles zwischen 
 like
 
@@ -104,3 +104,174 @@ where
 	AND
 	contacttitle = 'Owner'
 	
+
+
+	select * from orders
+
+	--Alle Bestellungen , die vom Angestellten nr 1 erledigt wurden,
+	-- aus dem Jahr 1997 und Lieferkosten unter 50 waren
+	--Employeeid  Orderdate Freight für das WHERE
+	--Wir wollen sehen: Orderdate, freight, employeeid und orderid  30
+
+select orderid, orderdate, freight, employeeid
+from orders
+where 
+		year(orderdate) = 1997
+		AND
+		Freight < 50
+		AND
+		EmployeeID = 1
+
+select * from orders o
+where
+	o.EmployeeID = 1
+	and
+	o.Freight < 50
+	and
+	year(o.OrderDate) = 1997
+
+
+select * from orders
+
+
+--NULL ist nicht 0 und ist auch nicht ''
+--NULL ist nicht definiert
+
+select 100 +0
+select 100 + NULL
+select 'ABC' + NULL
+select * from orders where ShipRegion > NULL
+
+select * from orders where ShipRegion = NULL
+
+
+select * from orders where ShipRegion is not NULL
+
+
+--Wie suche ich nach Dingen wie: es soll mit A beginnen
+
+--LIKE
+
+--is der einzige Operator , der Wildcards kennt
+-- % steht für 0 oder mehr Zeichen
+
+where spalte like 'A%'
+
+--Alle Kunden, deren Kundennumemr mit A beginnt
+select * from customers
+where customerid like 'A%'
+
+--Suche alle Kunden , deren Customerid mit A endet
+
+select * from customers
+where customerid like '%A'
+
+--Suche alle Kunden , deren Customerid mit A endet
+--und mit M beginnen
+
+select * from customers
+where customerid like 'M%A'
+
+--suche alle Kunden , die ein h irgendwo im customerid haben
+
+select * from customers
+where customerid like '%h%'
+
+--weitere Wildcard:  _ steht für genau ein Zeichen
+
+select * from customers
+where customerid like '_H%'
+
+--Suche alle Angestellten, die als 2ten Buchstaben im Familenname ein A besitzen
+
+select * from employees
+where 
+	Lastname like '_a%'
+
+
+--alle Kunden, deren Customerid mit A oder B oder C oder D beginnt
+
+select * from customers
+where customerid like 'A%' or customerid like 'B%' or customerid like 'C%' or customerid like 'D%'
+
+select * from customers 
+where customerid in ('A%', 'B%', 'C%', 'D%') --geht nicht weil kein like sondern = 
+
+
+select * from customers
+where customerid < 'E' 
+
+
+--für like kann man auch Wertebereiche vorgeben
+-- [] steht für genau ein Zeichen 
+-- Wertebereich kann sein: [a-c], [abc],[aefhi], [1-3]
+
+select * from customers
+where customerid like '[A-D]%'
+
+--suche alle Kunden , deren Customerid 
+-- als vorletzten buchstaben ein d oder g oder h besitzten
+
+select * from customers
+where customerid like '%[dgh]_'
+
+--1234
+--char4  xa34
+
+--wie kann ich alle DS rausfinden der Spalte PIN nicht konform ist
+
+select * from girokonten 
+where pin like '%[a-z]%'--  was ist mit !$§"
+
+select * from girokonten 
+where pin > 1000 and pin < 10000 --tolle Idee, aber was ist mit 0123
+
+select * from girokonten 
+where pin not like  '[0-9][0-9][0-9][0-9]'
+
+
+select * from customers
+where customerid like '[^a-c|s-z]%'
+
+
+
+---JOIN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	select Spalte1 , Spalte2, Spalte3, ...
+	from tabelle
+	where
+		spalte1 > Wert
+		and
+		Spalte2 = Wert
+		or
+		Spalte3 >= Wert
+		and
+		Spalte4 between 1 and 10
+		or
+		Spalte5 in ('wert1', 'wert2', 'wert3')
+
